@@ -1,0 +1,2 @@
+# EmailPlatform
+My Email app
