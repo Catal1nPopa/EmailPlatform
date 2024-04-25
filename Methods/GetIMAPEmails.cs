@@ -99,16 +99,13 @@ namespace EmailApp.Methods
 
                                 if (IsVideoAttachment(mimePart))
                                 {
-                                    // Salvați conținutul videoclipului pe server sau într-o locație specifică
                                     string fileName = mimePart.FileName ?? "Unknown";
                                     string filePath = SaveVideoAttachment(fileName, attachmentData);
 
-                                    // Trimiteți URL-ul videoclipului către client
                                     attachments.Add((fileName, Encoding.UTF8.GetBytes(filePath)));
                                 }
                                 else
                                 {
-                                    // Adăugați atașamentul în mod normal
                                     attachments.Add((mimePart.FileName ?? "Unknown", attachmentData));
                                 }
                             }
@@ -122,34 +119,30 @@ namespace EmailApp.Methods
             return emailsList;
         }
 
-        // Funcție pentru a verifica dacă un atașament este un videoclip
+     
         private static bool IsVideoAttachment(MimePart attachment)
         {
-            // Aici puteți adăuga condițiile necesare pentru a identifica un videoclip
-            // De exemplu, puteți verifica tipul MIME al atașamentului sau extensia fișierului
-            // În acest exemplu, vom verifica extensia fișierului pentru simplitate
+           
             string fileName = attachment.FileName ?? "";
             string extension = Path.GetExtension(fileName).ToLower();
 
             return extension == ".mp4" || extension == ".mov" || extension == ".avi" || extension == ".mkv";
         }
 
-        // Funcție pentru a salva conținutul videoclipului și returnarea URL-ului acestuia
+ 
         private static string SaveVideoAttachment(string fileName, byte[] data)
         {
-            string directoryPath = "VideoAttachments"; // Directorul în care vor fi stocate videoclipurile
+            string directoryPath = "VideoAttachments"; 
             string filePath = Path.Combine(directoryPath, fileName);
 
-            // Asigurați-vă că directorul există
+        
             if (!Directory.Exists(directoryPath))
             {
                 Directory.CreateDirectory(directoryPath);
             }
 
-            // Salvați conținutul videoclipului în fișier
             File.WriteAllBytes(filePath, data);
 
-            // Returnați URL-ul videoclipului
             return filePath;
         }
 
